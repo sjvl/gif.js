@@ -22,7 +22,7 @@ import { GIF } from './gif.js';
 
 var gif = new GIF({
   workers: 2,
-  quality: 10
+  quality: 10,
   width: 800,
   height: 600,
 });
