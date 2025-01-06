@@ -19,21 +19,12 @@ Include `gif.js` found in `dist/` in your page. Also make sure to have `gif.work
 
 ```javascript
 import { GIF } from './gif.js';
-import { GifWorker } from './gif.worker.js';
-
-createGifWorker(workerContent) {
-    const blob = new Blob([workerContent], { type: 'application/javascript' });
-    return URL.createObjectURL(blob);
-}
-
-var workerUrl = createGifWorker(GIFWorker);
 
 var gif = new GIF({
   workers: 2,
   quality: 10
   width: 800,
   height: 600,
-  workerScript: workerUrl,
 });
 ```
 
@@ -46,7 +37,6 @@ Options can be passed to the constructor or using the `setOptions` method.
 | repeat       | `0`             | repeat count, `-1` = no repeat, `0` = forever      |
 | quality      | `10`            | pixel sample interval, lower is better             |
 | workers      | `2`             | number of web workers to spawn                     |
-| workerScript | `gif.worker.js` | url to load worker script from                     |
 | background   | `#fff`          | background color where source image is transparent |
 | width        | `null`          | output image width                                 |
 | height       | `null`          | output image height                                |
