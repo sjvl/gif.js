@@ -1,7 +1,6 @@
 **SOURCE -> gif.js 0.2.0 - https://github.com/jnordberg/gif.js** 
 
-**This is just an implementation of jnordberg original code for es6 import**
-
+This is just an implementation of jnordberg original code for es6 import
 
 # gif.js
 
@@ -19,6 +18,8 @@ Works in browsers supporting: [Web Workers](http://www.w3.org/TR/workers/), [Fil
 Include `gif.js` found in `dist/` in your page. Also make sure to have `gif.worker.js` in the same location.
 
 ```javascript
+import { GIF } from './gif.js';
+
 var gif = new GIF({
   workers: 2,
   quality: 10
