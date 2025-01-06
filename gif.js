@@ -1,6 +1,8 @@
 // ATTRIBUTION -> gif.js 0.2.0 - https://github.com/jnordberg/gif.js
 // THIS IS JUST AN IMPLEMENTATION OF jnordberg CODE FOR ES6
 
+import { GifWorker } from "./gif.worker";
+
 // Browser detection utility
 const browser = {
     name: (() => {
@@ -231,7 +233,6 @@ export class GIF extends EventEmitter {
     constructor(options = {}) {
         super();
         const defaults = {
-            workerScript: 'gif.worker.js',
             workers: 2,
             repeat: 0,
             background: '#fff',
@@ -250,6 +251,11 @@ export class GIF extends EventEmitter {
         this.activeWorkers = [];
         
         this.setOptions(options);
+    }
+
+    createGifWorker(GifWorker) {
+        const blob = new Blob([GifWorker], { type: 'application/javascript' });
+        return URL.createObjectURL(blob);
     }
 
     setOption(key, value) {
@@ -334,9 +340,10 @@ export class GIF extends EventEmitter {
     spawnWorkers() {
         const numWorkers = Math.min(this.options.workers, this.frames.length);
         
+        const workerUrl = this.createGifWorker(GifWorker);
         Array.from({ length: numWorkers - this.freeWorkers.length }).forEach((_, i) => {
             this.log(`spawning worker ${i}`);
-            const worker = new Worker(this.options.workerScript);
+            const worker = new Worker(workerUrl);
             
             worker.onmessage = (event) => {
             this.activeWorkers.splice(this.activeWorkers.indexOf(worker), 1);
