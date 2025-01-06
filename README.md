@@ -19,27 +19,22 @@ Include `gif.js` found in `dist/` in your page. Also make sure to have `gif.work
 
 ```javascript
 import { GIF } from './gif.js';
+import { GifWorker } from './gif.worker.js';
+
+createGifWorker(workerContent) {
+    const blob = new Blob([workerContent], { type: 'application/javascript' });
+    return URL.createObjectURL(blob);
+}
+
+var workerUrl = createGifWorker(GIFWorker);
 
 var gif = new GIF({
   workers: 2,
   quality: 10
+  width: 800,
+  height: 600,
+  workerScript: workerUrl,
 });
-
-// add an image element
-gif.addFrame(imageElement);
-
-// or a canvas element
-gif.addFrame(canvasElement, {delay: 200});
-
-// or copy the pixels from a canvas context
-gif.addFrame(ctx, {copy: true});
-
-gif.on('finished', function(blob) {
-  window.open(URL.createObjectURL(blob));
-});
-
-gif.render();
-
 ```
 
 ## Options
